@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JASON X. LIN — Data Platform Engineer</title>
+<style>
+  :root{
+    --bg:#0a0a0f;
+    --ink:#e8e6e1;
+    --dim:#8a877f;
+    --red:#ff2d40;
+    --cyan:#27e8c8;
+    --amber:#ffb324;
+    --grid:#1a1a24;
+    --mono:'SF Mono','JetBrains Mono','Fira Code',Menlo,monospace;
+    --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--ink);font-family:var(--sans);
+    overflow-x:hidden;line-height:1.5;
+  }
+  /* film grain */
+  body::after{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  ::selection{background:var(--red);color:#fff}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 28px;mix-blend-mode:difference;
+    font-family:var(--mono);font-size:13.5px;letter-spacing:.15em;
+  }
+  nav .logo{font-weight:700;font-size:16px}
+  nav a{color:var(--ink);text-decoration:none;margin-left:22px;text-transform:uppercase}
+  nav a:hover{color:var(--red)}
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    padding:0 6vw;position:relative;
+    background:
+      linear-gradient(var(--grid) 1px,transparent 1px),
+      linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+    background-size:64px 64px;
+  }
+  .hero .kicker{
+    font-family:var(--mono);color:var(--cyan);font-size:15px;
+    letter-spacing:.35em;text-transform:uppercase;margin-bottom:24px;
+  }
+  .hero h1{
+    font-size:clamp(56px,11vw,170px);line-height:.88;font-weight:800;
+    letter-spacing:-.04em;text-transform:uppercase;
+  }
+  .hero h1 .stroke{
+    -webkit-text-stroke:2px var(--ink);color:transparent;display:block;
+  }
+  .hero h1 .glitch{position:relative;display:block;color:var(--ink)}
+  .hero h1 .glitch::before,.hero h1 .glitch::after{
+    content:attr(data-t);position:absolute;inset:0;
+  }
+  .hero h1 .glitch::before{color:var(--red);animation:gl 3.2s infinite steps(1);clip-path:inset(20% 0 55% 0)}
+  .hero h1 .glitch::after{color:var(--cyan);animation:gl 2.7s .4s infinite steps(1);clip-path:inset(60% 0 15% 0)}
+  @keyframes gl{
+    0%,92%{transform:none;opacity:0}
+    93%{transform:translate(-6px,2px);opacity:.8}
+    95%{transform:translate(5px,-2px);opacity:.8}
+    97%{transform:translate(-3px,1px);opacity:.8}
+    98%,100%{transform:none;opacity:0}
+  }
+  .hero .sub{
+    margin-top:32px;max-width:760px;font-size:21px;color:var(--dim);
+  }
+  .hero .sub b{color:var(--ink)}
+  .hero .hi{margin-top:26px;display:flex;flex-direction:column;gap:12px}
+  .hero .hi div{font-size:20px;color:var(--ink);font-weight:600}
+  .hero .hi div::before{content:"▸ ";color:var(--red);font-weight:700}
+  .hero .hi div em{font-style:normal;color:var(--cyan)}
+  .hero .meta{
+    margin-top:30px;font-family:var(--mono);font-size:13.5px;color:var(--dim);
+    display:flex;gap:36px;flex-wrap:wrap;
+  }
+  .hero .meta span b{color:var(--amber);font-size:27px;display:block;font-weight:700}
+  .scroll-cue{
+    position:absolute;bottom:28px;left:6vw;font-family:var(--mono);
+    font-size:11px;letter-spacing:.3em;color:var(--dim);
+    animation:bob 2s ease-in-out infinite;
+  }
+  @keyframes bob{50%{transform:translateY(8px)}}
+
+  /* ---------- marquee ---------- */
+  .marquee{
+    border-top:1px solid var(--red);border-bottom:1px solid var(--red);
+    overflow:hidden;white-space:nowrap;padding:14px 0;background:#0e0e15;
+  }
+  .marquee .track{display:inline-block;animation:slide 28s linear infinite;
+    font-family:var(--mono);font-size:16px;letter-spacing:.2em;text-transform:uppercase}
+  .marquee .track span{margin:0 28px;color:var(--dim)}
+  .marquee .track span:nth-child(odd){color:var(--ink)}
+  .marquee .track em{color:var(--red);font-style:normal}
+  @keyframes slide{to{transform:translateX(-50%)}}
+
+  /* ---------- sections ---------- */
+  section{padding:110px 6vw;position:relative}
+  .sec-label{
+    font-family:var(--mono);font-size:13.5px;color:var(--red);
+    letter-spacing:.35em;text-transform:uppercase;margin-bottom:18px;
+  }
+  .sec-label::before{content:"// "}
+  h2{
+    font-size:clamp(40px,5.5vw,72px);font-weight:800;letter-spacing:-.03em;
+    text-transform:uppercase;margin-bottom:48px;line-height:1;
+  }
+  h2 .accent{color:var(--cyan)}
+
+  /* about */
+  .about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:60px;align-items:start}
+  .about-grid p{font-size:20px;color:var(--dim);margin-bottom:22px}
+  .about-grid p b{color:var(--ink)}
+  .stat-stack{display:flex;flex-direction:column;gap:2px}
+  .stat{
+    background:#101018;border-left:3px solid var(--red);padding:20px 24px;
+    transition:transform .25s,border-color .25s;
+  }
+  .stat:hover{transform:translateX(10px);border-color:var(--cyan)}
+  .stat b{font-size:33px;font-weight:800;display:block;letter-spacing:-.02em}
+  .stat span{font-family:var(--mono);font-size:13px;color:var(--dim);letter-spacing:.12em;text-transform:uppercase}
+
+  /* flagship cards */
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:20px}
+  .card{
+    background:#101018;border:1px solid #21212e;padding:32px 28px;position:relative;
+    transition:transform .25s,border-color .25s;overflow:hidden;
+  }
+  .card:hover{transform:translateY(-8px);border-color:var(--red)}
+  .card .num{
+    font-family:var(--mono);font-size:60px;font-weight:700;color:transparent;
+    -webkit-text-stroke:1px #2c2c3c;position:absolute;top:10px;right:16px;line-height:1;
+  }
+  .card:hover .num{-webkit-text-stroke:1px var(--red)}
+  .card h3{font-size:23px;font-weight:700;margin-bottom:14px;text-transform:uppercase;
+    letter-spacing:.02em;max-width:85%}
+  .card p{font-size:17px;color:var(--dim)}
+  .card .tags{margin-top:18px;display:flex;flex-wrap:wrap;gap:6px}
+  .card .tags i{
+    font-style:normal;font-family:var(--mono);font-size:12px;letter-spacing:.08em;
+    border:1px solid #2c2c3c;color:var(--cyan);padding:3px 8px;text-transform:uppercase;
+  }
+
+  /* timeline */
+  .timeline{border-left:2px solid #24242f;margin-left:8px}
+  .t-item{padding:0 0 56px 40px;position:relative}
+  .t-item::before{
+    content:"";position:absolute;left:-8px;top:6px;width:14px;height:14px;
+    background:var(--bg);border:2px solid var(--red);transform:rotate(45deg);
+  }
+  .t-item:hover::before{background:var(--red)}
+  .t-item .when{font-family:var(--mono);color:var(--amber);font-size:15px;letter-spacing:.2em}
+  .t-item h3{font-size:30px;font-weight:800;text-transform:uppercase;margin:8px 0 12px;letter-spacing:-.01em}
+  .t-item p{color:var(--dim);max-width:820px;font-size:18px}
+
+  /* docs */
+  .doc-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;background:#21212e;border:1px solid #21212e}
+  .doc{background:var(--bg);padding:26px 24px}
+  .doc:hover{background:#101018}
+  .doc h4{font-family:var(--mono);font-size:15px;color:var(--cyan);letter-spacing:.12em;
+    text-transform:uppercase;margin-bottom:12px}
+  .doc ul{list-style:none}
+  .doc li{font-size:16.5px;color:var(--dim);padding:6px 0 6px 18px;position:relative}
+  .doc li::before{content:"▸";position:absolute;left:0;color:var(--red)}
+  .docs-note{margin-top:28px;font-family:var(--mono);font-size:14.5px;color:var(--dim)}
+  .docs-note b{color:var(--amber)}
+
+  /* stack */
+  .stack-rows{display:flex;flex-direction:column;gap:0}
+  .stack-row{
+    display:grid;grid-template-columns:220px 1fr;gap:24px;align-items:baseline;
+    padding:22px 0;border-bottom:1px solid #1c1c28;
+  }
+  .stack-row:first-child{border-top:1px solid #1c1c28}
+  .stack-row .k{font-family:var(--mono);font-size:13.5px;color:var(--red);
+    letter-spacing:.2em;text-transform:uppercase}
+  .stack-row .v{font-size:20px;color:var(--ink);font-weight:500}
+
+  /* footer */
+  footer{
+    padding:110px 6vw 60px;text-align:left;
+    background:linear-gradient(180deg,var(--bg),#12060a);
+  }
+  footer h2{margin-bottom:24px}
+  footer .mail{
+    font-family:var(--mono);font-size:clamp(16px,3vw,30px);color:var(--cyan);
+    text-decoration:none;border-bottom:2px solid var(--red);padding-bottom:4px;
+  }
+  footer .mail:hover{color:var(--red);border-color:var(--cyan)}
+  footer .fine{margin-top:60px;font-family:var(--mono);font-size:12.5px;color:var(--dim);
+    letter-spacing:.15em;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+  /* reveal on scroll */
+  .rv{opacity:0;transform:translateY(34px);transition:opacity .7s,transform .7s}
+  .rv.in{opacity:1;transform:none}
+
+  @media(max-width:820px){
+    .about-grid{grid-template-columns:1fr}
+    .stack-row{grid-template-columns:1fr;gap:6px}
+    nav a{margin-left:14px}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">JXL<span style="color:var(--red)">_</span></div>
+  <div>
+    <a href="#work">Work</a><a href="#timeline">Timeline</a><a href="#docs">Docs</a><a href="#stack">Stack</a><a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="kicker">Petabyte-scale · Multi-cloud · Security telemetry</div>
+  <h1>
+    <span class="stroke">JASON</span>
+    <span class="glitch" data-t="X. LIN">X. LIN</span>
+  </h1>
+  <p class="sub">
+    Staff Engineer. I build and operate <b>search data lakes</b> at <b>8 PB scale</b> —
+    the engine room behind Trend Vision One's XDR platform.
+  </p>
+  <div class="hi">
+    <div>Led the <em>ADX → Iceberg/Trino lakehouse migration</em>, end to end</div>
+    <div>Built a <em>traffic-mirroring platform</em> that proved the cutover on live production traffic</div>
+    <div>One API surface, <em>three query engines</em>, 8+ production regions</div>
+  </div>
+  <div class="meta">
+    <span><b>8 PB</b>searchable data</span>
+    <span><b>300 GB</b>raw logs / minute</span>
+    <span><b>400+ TB</b>raw logs / day</span>
+    <span><b>~30 s</b>data latency</span>
+    <span><b>8+</b>production regions</span>
+    <span><b>3</b>query engines</span>
+  </div>
+  <div class="scroll-cue">SCROLL ↓</div>
+</header>
+
+<div class="marquee">
+  <div class="track">
+    <span>TRINO</span><em>◆</em><span>STARROCKS</span><em>◆</em><span>APACHE ICEBERG</span><em>◆</em><span>DATABRICKS</span><em>◆</em><span>SPARK STREAMING</span><em>◆</em><span>AZURE DATA EXPLORER</span><em>◆</em><span>KQL</span><em>◆</em><span>OPENSEARCH</span><em>◆</em><span>PYTHON ASYNCIO</span><em>◆</em><span>PYSIGMA</span><em>◆</em><span>AWS LAMBDA</span><em>◆</em><span>TERRAFORM</span><em>◆</em><span>ANSIBLE</span><em>◆</em>
+    <span>TRINO</span><em>◆</em><span>STARROCKS</span><em>◆</em><span>APACHE ICEBERG</span><em>◆</em><span>DATABRICKS</span><em>◆</em><span>SPARK STREAMING</span><em>◆</em><span>AZURE DATA EXPLORER</span><em>◆</em><span>KQL</span><em>◆</em><span>OPENSEARCH</span><em>◆</em><span>PYTHON ASYNCIO</span><em>◆</em><span>PYSIGMA</span><em>◆</em><span>AWS LAMBDA</span><em>◆</em><span>TERRAFORM</span><em>◆</em><span>ANSIBLE</span><em>◆</em>
+  </div>
+</div>
+
+<section id="work">
+  <div class="sec-label">Flagship Work</div>
+  <h2 class="rv">Things I <span class="accent">built</span></h2>
+  <div class="cards">
+    <div class="card rv">
+      <div class="num">01</div>
+      <h3>Lakehouse Migration — Technical Lead</h3>
+      <p>Migrated a production XDR data lake from Azure Data Explorer to an Apache Iceberg + Trino
+      lakehouse on S3. Designed table schemas and a schema-conflict-free design for heterogeneous
+      security logs, built the Spark Structured Streaming ingestion pipeline, implemented the
+      Trino-backed search API layer, and drove a staged multi-region production cutover.</p>
+      <div class="tags"><i>Iceberg</i><i>Trino</i><i>Databricks</i><i>Spark</i><i>S3</i></div>
+    </div>
+    <div class="card rv">
+      <div class="num">02</div>
+      <h3>Traffic-Mirroring Validation Platform</h3>
+      <p>A complete shadow-traffic subsystem that duplicates live production search traffic to the
+      new Trino backend — Lambda mirror, CloudFormation-deployed pipeline with DLQs, request
+      replayer, and automated result/latency comparison — so the migration was proven against
+      real production workload before any customer was switched.</p>
+      <div class="tags"><i>Lambda</i><i>SQS</i><i>CloudFormation</i><i>Python</i></div>
+    </div>
+    <div class="card rv">
+      <div class="num">03</div>
+      <h3>Sigma → SQL Query Compilation</h3>
+      <p>Implemented the lakehouse search APIs translating a Sigma-based customer query language
+      into Trino SQL: query/token adapters, SQL builder, a pySigma lakehouse backend, case-insensitive
+      search via lowercase shadow columns, and operator-semantics parity with the legacy KQL engine.</p>
+      <div class="tags"><i>pySigma</i><i>Trino SQL</i><i>KQL</i><i>asyncio</i></div>
+    </div>
+    <div class="card rv">
+      <div class="num">04</div>
+      <h3>Multi-Cluster ADX Scale-Out</h3>
+      <p>Took the platform beyond a single Azure Data Explorer cluster: cache-routed multi-cluster
+      ingestion, race-condition-safe provisioning, and a pre-provisioned database pool that cut
+      new-customer onboarding latency from slow cluster operations to near-instant assignment.</p>
+      <div class="tags"><i>ADX</i><i>Kusto</i><i>Cosmos DB</i><i>Azure Functions</i></div>
+    </div>
+    <div class="card rv">
+      <div class="num">05</div>
+      <h3>Sovereign Cloud on OpenSearch</h3>
+      <p>Ported the entire search API stack to sovereign / on-premises environments backed by
+      OpenSearch — by first refactoring the search layer onto pluggable engine middlewares with a
+      unified executor, so one API surface now runs on three different query engines.</p>
+      <div class="tags"><i>OpenSearch</i><i>middleware</i><i>Docker</i></div>
+    </div>
+    <div class="card rv">
+      <div class="num">06</div>
+      <h3>Fleet-Scale Operations &amp; Cost</h3>
+      <p>Five years of production ownership across 8+ regions: E2E availability monitoring, custom
+      metrics frameworks, poison-queue auto-remediation, data-driven Databricks/ADX/Cosmos DB
+      capacity tuning, and an Azure Functions runtime fleet migration executed through
+      purpose-built Ansible automation.</p>
+      <div class="tags"><i>Terraform</i><i>Ansible</i><i>App Insights</i><i>CloudWatch</i></div>
+    </div>
+  </div>
+</section>
+
+<section id="about" style="background:#0c0c13">
+  <div class="sec-label">Profile</div>
+  <h2 class="rv">Full-stack<br>of the <span class="accent">data platform</span></h2>
+  <div class="about-grid">
+    <div class="rv">
+      <p>XDL — the <b>XDR Search Data Lake</b> — stores consolidated security logs from Trend Micro
+      products worldwide and serves the search, aggregation, and detection workloads behind
+      Trend Vision One. Queries arrive in a Sigma-based language and are <b>compiled into KQL,
+      Trino SQL, or OpenSearch DSL</b> depending on the backend.</p>
+      <p>I'm one of the few engineers who has worked <b>every layer</b> of this platform:
+      the search APIs and their query compilers, the streaming ingestion pipelines, the
+      distributed query engines underneath, the Terraform/Ansible infrastructure across
+      every production region, and the monitoring that keeps it honest at 3 a.m.</p>
+      <p>My defining project: <b>leading the migration of the entire platform off Azure Data
+      Explorer onto an Apache Iceberg + Trino lakehouse</b> — from the first engine survey and
+      gap analysis, through building the new ingestion and query layers, to a traffic-mirrored,
+      staged production cutover.</p>
+    </div>
+    <div class="stat-stack rv">
+      <div class="stat"><b>400+ TB / day</b><span>raw logs ingested at ~30 s latency</span></div>
+      <div class="stat"><b>2021 → 2026</b><span>continuous platform ownership</span></div>
+      <div class="stat"><b>ADX → Lakehouse</b><span>flagship re-architecture, led E2E</span></div>
+      <div class="stat"><b>Sigma → SQL</b><span>query compilation, 3 engine dialects</span></div>
+      <div class="stat"><b>US·EU·JP·SG·IN·AU·MEA·UAE</b><span>regions operated in production</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="timeline">
+  <div class="sec-label">Trajectory</div>
+  <h2 class="rv">2021 <span class="accent">→</span> 2026</h2>
+  <div class="timeline">
+    <div class="t-item rv">
+      <div class="when">2021 — 2022</div>
+      <h3>Foundation &amp; Scale-Out</h3>
+      <p>Ported the platform foundation onto Azure: asyncio importer (protobuf → ADX), log-receiver
+      dispatchers, Databricks streaming layer. Architected multi-ADX scale-out and the database-pool
+      provisioning system as customer count grew.</p>
+    </div>
+    <div class="t-item rv">
+      <div class="when">2022 — 2024</div>
+      <h3>Search Evolution &amp; Pipeline 3.0</h3>
+      <p>Owned search API features — V3 auto-sliding pagination, Sigma operators, async job APIs —
+      plus reporting, threat-sweeping KQL optimization, observability and auto-remediation. Drove the
+      2023 pipeline reconstruction with PoCs and benchmarking.</p>
+    </div>
+    <div class="t-item rv">
+      <div class="when">2024 — 2025</div>
+      <h3>Sovereign Cloud &amp; Due Diligence</h3>
+      <p>Enabled sovereign/private-cloud deployments on OpenSearch through a pluggable search-engine
+      refactor. Ran the build-vs-buy evaluations — GCP BigQuery PoCs, Spanner limits, engine surveys,
+      Iceberg ingestion survey — that set the next-generation architecture direction.</p>
+    </div>
+    <div class="t-item rv">
+      <div class="when">2025 — 2026</div>
+      <h3>The Lakehouse Migration</h3>
+      <p>Technical lead of the ADX → Iceberg/Trino migration: gap analyses and risk evaluation, new
+      ingestion pipeline, Trino search layer, traffic-mirroring validation, performance and cost
+      engineering, and staged production cutover with EMR-based historical backfill.</p>
+    </div>
+  </div>
+</section>
+
+<section id="docs" style="background:#0c0c13">
+  <div class="sec-label">Knowledge Footprint</div>
+  <h2 class="rv">Engineering, <span class="accent">written down</span></h2>
+  <div class="doc-cols rv">
+    <div class="doc">
+      <h4>Migration &amp; Gap Analysis</h4>
+      <ul>
+        <li>ADX vs Trino gap analysis series</li>
+        <li>CKQL → TQL translation risk evaluation</li>
+        <li>Commercial migration plan &amp; task board</li>
+        <li>E2E validation with downstream</li>
+      </ul>
+    </div>
+    <div class="doc">
+      <h4>Design Documents</h4>
+      <ul>
+        <li>Iceberg ingestion pipeline design</li>
+        <li>Schema-conflict-free table design</li>
+        <li>Traffic-mirroring architecture</li>
+        <li>Log Receiver &amp; Pipeline 3.0 designs</li>
+      </ul>
+    </div>
+    <div class="doc">
+      <h4>Performance Studies</h4>
+      <ul>
+        <li>US production query evaluation</li>
+        <li>Trino UNION-ALL strategy benchmarks</li>
+        <li>Production slowness root-cause reports</li>
+        <li>BigQuery staged PoC comparisons</li>
+      </ul>
+    </div>
+    <div class="doc">
+      <h4>Enablement</h4>
+      <ul>
+        <li>Lakehouse newcomer guide</li>
+        <li>SOPs: onboarding, replay, deployment</li>
+        <li>Review &amp; demo hubs</li>
+        <li>Knowledge-transfer (TOI) docs</li>
+      </ul>
+    </div>
+  </div>
+  <p class="docs-note"><b>95+ documents</b> authored across design, analysis, operations and enablement —
+  the written engineering record of the platform.</p>
+</section>
+
+<section id="stack">
+  <div class="sec-label">Arsenal</div>
+  <h2 class="rv">The <span class="accent">stack</span></h2>
+  <div class="stack-rows rv">
+    <div class="stack-row"><div class="k">Languages</div><div class="v">Python (asyncio) · SQL · KQL · Spark</div></div>
+    <div class="stack-row"><div class="k">Data Platforms</div><div class="v">Apache Iceberg · Delta · Databricks · Trino · StarRocks · Azure Data Explorer · OpenSearch · Cosmos DB</div></div>
+    <div class="stack-row"><div class="k">Cloud</div><div class="v">Azure (Functions, Event Grid, Monitor) · AWS (Lambda, S3, SQS, EMR, Glue, CloudFormation) · GCP (PoC)</div></div>
+    <div class="stack-row"><div class="k">Infra &amp; Delivery</div><div class="v">Terraform · Ansible · Jenkins · GitHub Actions · Docker</div></div>
+    <div class="stack-row"><div class="k">Domain</div><div class="v">XDR security telemetry · Sigma query compilation · petabyte log analytics · multi-region SaaS ops</div></div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="sec-label">Contact</div>
+  <h2>Let's build<br>something <span style="color:var(--red)">loud</span>.</h2>
+  <a class="mail" href="mailto:jason_x_lin@trendmicro.com">jason_x_lin@trendmicro.com</a>
+  <div class="fine">
+    <span>JASON X. LIN — DATA PLATFORM ENGINEER</span>
+    <span>BUILT WITH GRIT · NO TEMPLATES HARMED</span>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(es => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
